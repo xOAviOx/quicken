@@ -1,0 +1,17 @@
+{
+  "name": "living-reader",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Living Reader — turns novels/manga into alive reading experiences. Module 2: novel ingest + chunker.",
+  "scripts": {
+    "ingest": "node scripts/ingest-novel.mjs"
+  },
+  "engines": {
+    "node": ">=18.3.0"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "dotenv": "^16.4.5"
+  }
+}
