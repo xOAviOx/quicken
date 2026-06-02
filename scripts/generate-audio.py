@@ -30,6 +30,7 @@ This module does NOT build the frontend - that's a later module.
 """
 
 import argparse
+import glob
 import io
 import os
 import sys
@@ -76,7 +77,9 @@ def main():
     print(f"To process : {len(pages)}\n")
 
     # 4. Load Kokoro once (deferred import so a no-op run stays fast and dep
-    #    errors are clear).
+    #    errors are clear). Kokoro's English G2P falls back to espeak-ng; on
+    #    Windows phonemizer can't auto-locate the DLL, so point it there first.
+    ensure_espeak_library()
     try:
         import numpy as np
         import soundfile as sf
@@ -142,6 +145,31 @@ def _to_numpy(np, audio):
     if hasattr(audio, "detach"):  # torch tensor
         audio = audio.detach().cpu().numpy()
     return np.asarray(audio, dtype="float32").reshape(-1)
+
+
+def ensure_espeak_library():
+    """Point phonemizer at the espeak-ng shared library if it can't find one.
+
+    On Windows the installer ships libespeak-ng.dll under Program Files but does
+    not register it where phonemizer looks, so Kokoro's G2P fallback fails with
+    "failed to find espeak library". Respect an explicit env var if already set;
+    otherwise probe the usual install locations and export it for this process.
+    """
+    if os.environ.get("PHONEMIZER_ESPEAK_LIBRARY"):
+        return
+    if sys.platform == "win32":
+        candidates = [
+            os.path.join(os.environ.get("ProgramFiles", r"C:\Program Files"), "eSpeak NG", "libespeak-ng.dll"),
+            os.path.join(os.environ.get("ProgramFiles(x86)", r"C:\Program Files (x86)"), "eSpeak NG", "libespeak-ng.dll"),
+        ]
+    elif sys.platform == "darwin":
+        candidates = glob.glob("/opt/homebrew/lib/libespeak-ng*.dylib") + glob.glob("/usr/local/lib/libespeak-ng*.dylib")
+    else:
+        candidates = glob.glob("/usr/lib/**/libespeak-ng.so*", recursive=True) + glob.glob("/usr/local/lib/libespeak-ng.so*")
+    for path in candidates:
+        if path and os.path.exists(path):
+            os.environ["PHONEMIZER_ESPEAK_LIBRARY"] = path
+            return
 
 
 # ---------------------------------------------------------------------------
