@@ -241,7 +241,11 @@ async function callGemini(apiKey, model, prompt) {
       responseMimeType: 'application/json',
       responseSchema: RESPONSE_SCHEMA,
       temperature: 0.7,
-      maxOutputTokens: 1024,
+      maxOutputTokens: 2048,
+      // gemini-3.x flash is a "thinking" model; reasoning tokens otherwise eat the
+      // output budget and truncate/empty the JSON. Disable thinking for this
+      // structured-extraction task — it doesn't need it and runs faster.
+      thinkingConfig: { thinkingBudget: 0 },
     },
   });
 

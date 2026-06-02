@@ -1,0 +1,235 @@
+:root {
+  --bg: #0e0f13;
+  --panel: #16181f;
+  --text: #e8e8ea;
+  --muted: #9aa0ab;
+  --accent: #6aa9ff;
+  --border: #262a33;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ---------- Library ---------- */
+.library {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 48px 24px 96px;
+}
+.library h1 {
+  font-size: 28px;
+  margin: 0 0 4px;
+}
+.library .sub {
+  color: var(--muted);
+  margin: 0 0 32px;
+}
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+.book-card {
+  display: block;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.book-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+.book-card .title {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.book-card .meta {
+  color: var(--muted);
+  font-size: 13px;
+}
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 2px 8px;
+  margin-left: 8px;
+}
+.empty,
+.notice {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+code {
+  background: #0a0b0e;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1px 6px;
+  font-size: 13px;
+}
+
+/* ---------- Reader ---------- */
+.reader {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.reader-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border);
+}
+.reader-top .back {
+  color: var(--muted);
+  font-size: 14px;
+}
+.reader-top .book-title {
+  font-weight: 600;
+  font-size: 15px;
+}
+.stage {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 18px;
+  min-height: 0;
+}
+
+.flipbook {
+  margin: 0 auto;
+}
+.page {
+  background: #1b1d24;
+  overflow: hidden;
+}
+.page-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #000;
+}
+.page-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.page-noimg {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+}
+.page-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 28px 18px 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #fff;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0));
+}
+.page-num {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Begin overlay (autoplay unlock gate) */
+.begin-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: rgba(10, 11, 14, 0.82);
+  backdrop-filter: blur(3px);
+  z-index: 10;
+}
+.begin-overlay p {
+  color: var(--muted);
+  margin: 0;
+}
+.btn {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 9px 14px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.btn:hover {
+  border-color: var(--accent);
+}
+.btn.primary {
+  background: var(--accent);
+  color: #06121f;
+  border-color: var(--accent);
+  font-weight: 600;
+  padding: 12px 22px;
+  font-size: 15px;
+}
+.btn.active {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Controls bar */
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px;
+  border-top: 1px solid var(--border);
+  background: var(--panel);
+}
+.controls .spacer {
+  width: 8px;
+}
+.controls .pageinfo {
+  color: var(--muted);
+  font-size: 13px;
+  min-width: 90px;
+  text-align: center;
+}

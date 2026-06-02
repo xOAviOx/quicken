@@ -3,5 +3,17 @@ node_modules/
 .env.local
 *.log
 
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+.env.local
+
 # Local Claude Code settings (machine-specific)
 .claude/settings.local.json

@@ -1,0 +1,7 @@
+# Module 5 - Kokoro TTS worker (scripts/generate-audio.py)
+# Also requires the system package espeak-ng (see the script's SETUP notes).
+kokoro>=0.9.4
+soundfile
+numpy
+requests
+python-dotenv
