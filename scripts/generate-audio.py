@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """
+'x
 Module 5 - TTS worker (plan.md §3 step 5, §6 item 5). Novels only.
 
 For one book, synthesizes narration audio from each page's `summary_text` using
